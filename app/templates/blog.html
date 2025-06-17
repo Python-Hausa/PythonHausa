@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="py-5 text-center bg-dark text-white">
+  <div class="container">
+    <h1 class="display-5 fw-bold">Python Hausa Blog</h1>
+    <p class="lead mt-3">Read stories, tips, tutorials, and community updates in Hausa and English.</p>
+  </div>
+</section>
+
+<!-- BLOG CARDS SECTION -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h3 class="text-center text-dark mb-5">Latest Articles</h3>
+    <div class="row g-4">
+      
+      <!-- BLOG POST 1 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <img src="/static/images/blog1.jpg" class="card-img-top" alt="Python Basics">
+          <div class="card-body">
+            <h5 class="card-title">Python Farko: Abubuwan Da Ya Kamata Ka Fara Dasu</h5>
+            <p class="card-text small text-muted">Koyi abubuwan farko da zaka sani akan Python — daga variables zuwa loops — a saukake cikin Hausa.</p>
+            <a href="#" class="btn btn-sm btn-outline-primary mt-2">Read More</a>
+          </div>
+          <div class="card-footer text-muted small">
+            By Aliyu Usman • June 2025
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOG POST 2 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <img src="/static/images/blog2.jpg" class="card-img-top" alt="Women in Tech">
+          <div class="card-body">
+            <h5 class="card-title">Mata a Fannin Kwamfuta: Hanyar Farawa</h5>
+            <p class="card-text small text-muted">Me yasa ya dace da mata su shiga fannin tech? Karanta ra’ayoyi da labaran nasara daga Arewacin Najeriya.</p>
+            <a href="#" class="btn btn-sm btn-outline-primary mt-2">Read More</a>
+          </div>
+          <div class="card-footer text-muted small">
+            By Fatima Abubakar • May 2025
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOG POST 3 -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <img src="/static/images/blog3.jpg" class="card-img-top" alt="Open Source">
+          <div class="card-body">
+            <h5 class="card-title">Hausa a Duniyar Open Source</h5>
+            <p class="card-text small text-muted">Yadda zaka shiga ayyukan open source, da yadda Hausa ke da muhimmanci wajen ci gaban al’umma.</p>
+            <a href="#" class="btn btn-sm btn-outline-primary mt-2">Read More</a>
+          </div>
+          <div class="card-footer text-muted small">
+            By Mohammed Tijjani • April 2025
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
