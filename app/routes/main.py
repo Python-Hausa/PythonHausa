@@ -25,3 +25,15 @@ def blog():
 @main_bp.route("/contact")
 def contact():
     return render_template("contact.html")
+
+@main_bp.route("/conduct")
+def conduct():
+    return render_template("conduct.html")
+
+@main_bp.route("/health")
+def health():
+    return render_template("health.html")
+
+@main_bp.route("/donate")
+def donate():
+    return render_template("donate.html")
