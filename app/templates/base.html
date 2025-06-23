@@ -45,13 +45,18 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navmenu">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item"><a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">Home</a></li>
           <li class="nav-item"><a href="/about" class="nav-link {% if request.path == '/about' %}active{% endif %}">About</a></li>
           <li class="nav-item"><a href="/learn" class="nav-link {% if request.path == '/learn' %}active{% endif %}">Learn</a></li>
           <li class="nav-item"><a href="/events" class="nav-link {% if request.path == '/events' %}active{% endif %}">Events</a></li>
           <li class="nav-item"><a href="/blog" class="nav-link {% if request.path == '/blog' %}active{% endif %}">Blog</a></li>
           <li class="nav-item"><a href="/contact" class="nav-link {% if request.path == '/contact' %}active{% endif %}">Contact</a></li>
+          <li class="nav-item ms-3">
+            <a href="/donate" class="btn btn-outline-warning btn-sm rounded-pill px-3">
+              <i class="bi bi-heart-fill me-1"></i> Donate
+            </a>
+          </li>
         </ul>
       </div>
     </div>
