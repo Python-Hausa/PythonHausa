@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-primary">{{ event.title }}</h2>
+    <p class="text-muted">
+      <i class="bi bi-calendar-event"></i> {{ event.start_date.strftime('%Y-%m-%d') }}
+      {% if event.end_date != event.start_date %}
+      – {{ event.end_date.strftime('%Y-%m-%d') }}
+      {% endif %}
+      |
+      {% if event.status == 'upcoming' %}
+        <span class="badge bg-primary">Upcoming</span>
+      {% elif event.status == 'ongoing' %}
+        <span class="badge bg-warning text-dark">Ongoing</span>
+      {% else %}
+        <span class="badge bg-success">Past</span>
+      {% endif %}
+    </p>
+    <hr>
+    <div class="mt-4" style="line-height: 1.8;">
+      {{ event.description_html|safe }}
+    </div>
+    <div class="mt-4">
+      <a href="{{ url_for('main.events') }}" class="btn btn-secondary btn-sm">
+        <i class="bi bi-arrow-left"></i> Back to Events
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

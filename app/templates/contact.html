@@ -10,9 +10,24 @@
   </div>
 </section>
 
-<!-- CONTACT FORM SECTION -->
+<!-- CONTACT SECTION -->
 <section class="py-5 bg-light">
   <div class="container">
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-4">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
     <div class="row g-5">
       
       <!-- CONTACT DETAILS -->
@@ -31,7 +46,7 @@
         </div>
       </div>
 
-      <!-- FORM -->
+      <!-- CONTACT FORM -->
       <div class="col-md-7">
         <div class="p-4 bg-white rounded shadow-sm">
           <h5 class="mb-3 text-primary">Send Us a Message</h5>
@@ -43,6 +58,10 @@
             <div class="mb-3">
               <label for="email" class="form-label">Email Address</label>
               <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="subject" class="form-label">Subject</label>
+              <input type="text" class="form-control" id="subject" name="subject" required>
             </div>
             <div class="mb-3">
               <label for="message" class="form-label">Your Message</label>

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-4">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    <h2 class="mb-4 fw-bold text-primary"><i class="bi bi-speedometer2"></i> Admin Dashboard</h2>
+
+    <div class="row g-4">
+      <!-- Manage Blog Posts -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-pencil-square fs-1 text-info"></i>
+            <h5 class="card-title mt-3">Manage Blog Posts</h5>
+            <p class="card-text">Create, edit, and delete articles and announcements.</p>
+            <a href="{{ url_for('admin.manage_blog') }}" class="btn btn-outline-primary btn-sm">Open</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Site Statistics -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-bar-chart-line fs-1 text-success"></i>
+            <h5 class="card-title mt-3">Site Statistics</h5>
+            <p class="card-text">View website visit stats, user engagement and traffic data.</p>
+            <a href="{{ url_for('admin.site_stats') }}" class="btn btn-outline-success btn-sm">View</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Learning Materials -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-file-earmark-arrow-down fs-1 text-warning"></i>
+            <h5 class="card-title mt-3">Learning Materials</h5>
+            <p class="card-text">Upload and manage Hausa PDF guides and documents.</p>
+            <a href="{{ url_for('admin.learning_materials') }}" class="btn btn-outline-warning btn-sm">Manage</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manage Events -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-calendar-event fs-1 text-danger"></i>
+            <h5 class="card-title mt-3">Manage Events</h5>
+            <p class="card-text">Edit upcoming events and update past event details.</p>
+            <a href="{{ url_for('admin.manage_events') }}" class="btn btn-outline-danger btn-sm">Edit Events</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Messages -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-envelope fs-1 text-primary"></i>
+            <h5 class="card-title mt-3">Contact Messages</h5>
+            <p class="card-text">Read and respond to contact form submissions.</p>
+            <a href="{{ url_for('admin.messages') }}" class="btn btn-outline-primary btn-sm">Messages</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Access -->
+      {% if session.get('admin_type') == 'super' %}
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body text-center">
+                <i class="bi bi-person-lock fs-1 text-secondary"></i>
+                <h5 class="card-title mt-3">Admin Access</h5>
+                <p class="card-text">Add/remove admin users and manage login credentials.</p>
+                <a href="{{ url_for('admin.admins') }}" class="btn btn-outline-secondary btn-sm">Manage Admins</a>
+                </div>
+            </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

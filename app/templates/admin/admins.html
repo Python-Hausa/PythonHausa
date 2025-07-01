@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <h3 class="mb-4 text-primary"><i class="bi bi-person-lock"></i> Admin Access Management</h3>
+
+    <!-- Add Admin Form -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+        <h5 class="card-title">Add New Admin</h5>
+        <form method="POST" action="{{ url_for('admin.add_admin') }}">
+            <div class="row g-3">
+            <div class="col-md-3">
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+            </div>
+            <div class="col-md-3">
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+            </div>
+            <div class="col-md-3">
+                <select name="admin_type" class="form-select" required>
+                <option value="" disabled selected>Select Role</option>
+                <option value="super">Super Admin</option>
+                <option value="middle">Middle Admin</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Add Admin</button>
+            </div>
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <!-- Admin List -->
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Current Admins</h5>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                  <th>#</th>
+                  <th>Username</th>
+                  <th>Role</th>
+                  <th>Date Added</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for admin in admins %}
+                <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ admin.username }}</td>
+                  <td class="text-capitalize">{{ admin.admin_type }}</td>
+                  <td>{{ admin.created_at.strftime('%Y-%m-%d') }}</td>
+                  <td>
+                    <form method="POST" action="{{ url_for('admin.delete_admin', admin_id=admin.id) }}" onsubmit="return confirm('Are you sure?');">
+                      <button type="submit" class="btn btn-sm btn-danger">
+                        <i class="bi bi-trash"></i> Delete
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td colspan="5" class="text-center">No admins found.</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
