@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="mb-4">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <h3 class="mb-4 text-danger"><i class="bi bi-calendar-event"></i> Manage Events</h3>
+
+    <!-- Add Event Form -->
+    <div class="card mb-5 shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="card-title mb-3 text-secondary">Add New Event</h5>
+        <form method="POST" action="{{ url_for('admin.manage_events') }}">
+          <div class="row g-3">
+            <div class="col-md-6 col-lg-4">
+              <label class="form-label fw-semibold">Event Title</label>
+              <input type="text" name="title" class="form-control" placeholder="e.g. Django Bootcamp Kaduna" required>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <label class="form-label fw-semibold">Start Date</label>
+              <input type="date" name="start_date" class="form-control" required>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <label class="form-label fw-semibold">End Date</label>
+              <input type="date" name="end_date" class="form-control" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label fw-semibold">Event Description</label>
+              <textarea name="description" class="form-control" rows="4" placeholder="Brief overview of the event..." required></textarea>
+            </div>
+            <div class="col-12 text-end">
+              <button type="submit" class="btn btn-outline-danger px-4">Add Event</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Events Table -->
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="card-title mb-3 text-secondary">All Events</h5>
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered align-middle">
+            <thead class="table-light">
+              <tr class="text-center">
+                <th>#</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Dates</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for event in events %}
+              <tr>
+                <td class="text-center">{{ loop.index }}</td>
+                <td>{{ event.title }}</td>
+                <td class="text-center">
+                  {% if event.status == 'upcoming' %}
+                    <span class="badge bg-primary">Upcoming</span>
+                  {% elif event.status == 'ongoing' %}
+                    <span class="badge bg-warning text-dark">Ongoing</span>
+                  {% else %}
+                    <span class="badge bg-success">Past</span>
+                  {% endif %}
+                </td>
+                <td class="text-nowrap text-center">
+                  {{ event.start_date.strftime('%Y-%m-%d') }}<br>
+                  <small class="text-muted">to</small><br>
+                  {{ event.end_date.strftime('%Y-%m-%d') }}
+                </td>
+                <td>{{ event.description[:100] }}{% if event.description|length > 100 %}...{% endif %}</td>
+                <td class="text-center">
+                  <div class="d-flex justify-content-center gap-2">
+                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editModal{{ event.id }}">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <form method="POST" action="{{ url_for('admin.delete_event', event_id=event.id) }}" onsubmit="return confirm('Delete this event?');">
+                      <button type="submit" class="btn btn-sm btn-outline-danger">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Edit Event Modal -->
+              <div class="modal fade" id="editModal{{ event.id }}" tabindex="-1" aria-labelledby="editModalLabel{{ event.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <form method="POST" action="{{ url_for('admin.edit_event', event_id=event.id) }}">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Edit Event</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row g-3">
+                          <div class="col-md-6">
+                            <label class="form-label">Title</label>
+                            <input type="text" name="title" class="form-control" value="{{ event.title }}" required>
+                          </div>
+                          <div class="col-md-3">
+                            <label class="form-label">Start Date</label>
+                            <input type="date" name="start_date" class="form-control" value="{{ event.start_date.strftime('%Y-%m-%d') }}" required>
+                          </div>
+                          <div class="col-md-3">
+                            <label class="form-label">End Date</label>
+                            <input type="date" name="end_date" class="form-control" value="{{ event.end_date.strftime('%Y-%m-%d') }}" required>
+                          </div>
+                          <div class="col-12">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" class="form-control" rows="4" required>{{ event.description }}</textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              {% endfor %}
+              {% if not events %}
+              <tr>
+                <td colspan="6" class="text-center text-muted">No events found.</td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
